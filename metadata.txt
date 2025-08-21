@@ -1,0 +1,15 @@
+[general]
+name=Show Feature Count Toggle
+qgisMinimumVersion=3.0
+description=Das Plugin installiert einen Umschalter zum Ein- und Ausblenden der Objektanzahl-Anzeige für alle Vektor-Layer.  The plugin installs a toggle for showing and hiding the object count display for all vector layers.
+about=Fügt eine Toolbar-Schaltfläche hinzu, die die 'Objektanzahl anzeigen'-Funktion für alle Layer gleichzeitig ein- oder ausschaltet. / Adds a toolbar button that switches the 'Show object count' function on or off for all layers simultaneously.
+version=0.1
+author=Mike Elstermann (#geoObserver)
+category=Vector
+icon=logo.png
+experimental=False
+deprecated=False
+changelog = 0.1 ... Initiale Version / Initial version
+tracker = https://github.com/geoObserver/ShowFeatureCountToggle/issues/
+repository = https://github.com/geoObserver/ShowFeatureCountToggle/
+homepage = https://geoobserver.de/ShowFeatureCountToggle/
