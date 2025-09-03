@@ -11,11 +11,3 @@ A detailed description and FAQs can be found at https://geoobserver.de/showfeatu
 
 Despite careful checking, no liability can be accepted for the correctness of all functions of the plugin. This also applies to any damage or consequences arising from the direct or indirect use of the content provided.
 
-------------------------
-Die folgende kleine Animation zeigt die Einbindung in die Toolbar „#geoObserver Tools“ und das Plugin bei der Arbeit: Erster Klick - Einschalten der Feature-Zähler für alle Vektorthemen und 2. Klick wieder ausschalten der Anzeigen.<br><br>
-The following short animation shows how it is integrated into the ‘#geoObserver Tools’ toolbar and how the plugin works: First click - activate the feature counter for all vector themes and second click - deactivate the display again.<br><br>
-<img src="./QGIS_Plugin_ShowFeatureCountToggle_ani1.gif">
-
-
-
-
