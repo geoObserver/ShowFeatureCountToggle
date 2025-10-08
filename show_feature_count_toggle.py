@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-# new
-from qgis.PyQt.QtWidgets import QAction, QToolBar
-from qgis.PyQt.QtGui import QIcon
-from qgis.core import QgsLayerTreeGroup, QgsLayerTreeLayer
+# Qt6-kompatible Version
+
 import os
+from qgis.PyQt import QtWidgets, QtGui
+from qgis.core import QgsLayerTreeGroup, QgsLayerTreeLayer
+
 
 class ShowFeatureCountToggle:
     def __init__(self, iface):
@@ -16,20 +17,20 @@ class ShowFeatureCountToggle:
     def initGui(self):
         # Toolbar suchen oder erstellen
         tb_name = "#geoObserverTools"
-        for tb in self.iface.mainWindow().findChildren(QToolBar):
+        for tb in self.iface.mainWindow().findChildren(QtWidgets.QToolBar):
             if tb.objectName() == tb_name:
                 self.toolbar = tb
                 break
+
         if not self.toolbar:
-            self.toolbar = QToolBar(tb_name, self.iface.mainWindow())
+            self.toolbar = QtWidgets.QToolBar(tb_name, self.iface.mainWindow())
             self.toolbar.setObjectName(tb_name)
-            #self.iface.addToolBar(self.toolbar)
+            # Optional: direkt über iface registrieren
             self.toolbar = self.iface.addToolBar("#geoObserver Tools")
 
         # Aktion erzeugen
-        #icon_path = os.path.join(self.plugin_dir, "icon.svg")
         icon_path = os.path.join(self.plugin_dir, "logo.png")
-        self.action = QAction(QIcon(icon_path), "Objektanzahlen ein/ausblenden", self.iface.mainWindow())
+        self.action = QtGui.QAction(QtGui.QIcon(icon_path), "Objektanzahlen ein/ausblenden", self.iface.mainWindow())
         self.action.setCheckable(True)
         self.action.triggered.connect(self.toggle_counts)
 
@@ -37,10 +38,14 @@ class ShowFeatureCountToggle:
         self.toolbar.addAction(self.action)
 
     def unload(self):
+        # Aktion und Toolbar-Aufräumung
         if self.action and self.toolbar:
             self.toolbar.removeAction(self.action)
         if self.action:
-            self.iface.removePluginMenu("Show Feature Count Toggle", self.action)
+            try:
+                self.iface.removePluginMenu("Show Feature Count Toggle", self.action)
+            except Exception:
+                pass  # Menüeintrag existiert evtl. nicht mehr
 
     def toggle_counts(self):
         root = self.iface.layerTreeView().layerTreeModel().rootGroup()
@@ -52,7 +57,8 @@ class ShowFeatureCountToggle:
         for child in group.children():
             if isinstance(child, QgsLayerTreeLayer):
                 layer = child.layer()
-                if layer and layer.type() == layer.VectorLayer:
+                # Qt6 / QGIS-kompatible Abfrage des Layer-Typs
+                if layer and hasattr(layer, "isSpatial") and layer.isSpatial():
                     child.setCustomProperty("showFeatureCount", show)
             elif isinstance(child, QgsLayerTreeGroup):
                 self._set_counts_on_all(child, show)
